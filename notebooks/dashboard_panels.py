@@ -1,6 +1,16 @@
 import pandas as pd; import numpy as np; import matplotlib.pyplot as plt
 
+
+
 import panel as pn
+
+try:
+    import panel
+except ImportError:
+    os.system('pip install panel')
+    
+    
+
 
 pn.extension()
 
