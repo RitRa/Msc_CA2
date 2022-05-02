@@ -15,6 +15,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split # Import train_test_split function [2]
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import classification_report, confusion_matrix
 
 
 
@@ -24,11 +25,13 @@ features = st.container()
 model_training = st.container()
 
 
+
 with header:
+
     st.title("This is a test")
     st.text("this some textx")
     
-    df_fertiliser =  pd.read_pickle("../data/df_fertiliser.pkl")
+    df_fertiliser =  pd.read_pickle("https://github.com/RitRa/Msc_CA2/blob/b802b84c1bc267beea543ce96fa8e65f72fb6902/data/df_fertiliser.pkl")
     st.write(df_fertiliser.head(5))
     
     #drop na values
@@ -90,12 +93,15 @@ with model_training:
     sc = StandardScaler()
     X_train = sc.fit_transform(X_train)
     X_test = sc.transform(X_test)
+    st.write(X_test)
     
     
     #label encoding
     label_encoder = LabelEncoder()
     y_train= label_encoder.fit_transform(y_train)
     y_test= label_encoder.fit_transform(y_test)
+    st.subheader('y_test:')
+    st.write(y_test)
 
 
     # Create Decision Tree classifer object
@@ -103,8 +109,21 @@ with model_training:
 
     # Train Decision Tree Classifer
     clf = clf.fit(X_train,y_train)
-
+    st.subheader('clf:')
+    st.write(clf)
+    
     #Predict the response for test dataset
-    prediction = clf.predict(X_test)
+    y_pred = clf.predict(X_test)
+    st.subheader('y_pred:')
+    st.write(y_pred)
+    
+    st.subheader('Accuracy:')
+    st.write(classification_report(y_test,  y_pred, target_names=class_labels))
+    
+    
+    
+    
+    
+    
 
-    st.write(prediction)
+
