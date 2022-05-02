@@ -33,7 +33,8 @@ with header:
     
     
     
-    df_fertiliser = pd.read_pickle("df_fertiliser.pkl")
+    #df_fertiliser = pd.read_pickle("df_fertiliser.pkl")
+    df_fertiliser = pd.read_csv("../data/df_fertiliser.csv")
     st.write(df_fertiliser.head(5))
     
     #drop na values
