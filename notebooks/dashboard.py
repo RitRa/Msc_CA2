@@ -2,7 +2,7 @@ import streamlit as st
 
 import pandas as pd
 import numpy as np
-import pickle
+import pickle5 as pickle
 
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
@@ -31,7 +31,9 @@ with header:
     st.title("This is a test")
     st.text("this some textx")
     
-    df_fertiliser =  pd.read_pickle("https://github.com/RitRa/Msc_CA2/blob/b802b84c1bc267beea543ce96fa8e65f72fb6902/data/df_fertiliser.pkl")
+    
+    
+    df_fertiliser =  pd.read_pickle("../data/df_fertiliser.pkl")
     st.write(df_fertiliser.head(5))
     
     #drop na values
