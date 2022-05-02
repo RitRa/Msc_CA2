@@ -10,15 +10,7 @@ import pandas as pd
 import pickle
 import csv
 
-# Import the os module
-import os
 
-# Get the current working directory
-#cwd = os.getcwd()
-#print(cwd)
-
-#os.chdir(r"/Users/ritaraher/Dropbox/Study/CCT/python_msc/Msc_CA2/notebooks")
-#print("Directory changed")
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
