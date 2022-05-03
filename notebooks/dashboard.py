@@ -31,7 +31,7 @@ with header:
     st.text("this some textx")
         
     #df_fertiliser = pd.read_pickle("df_fertiliser.pkl")
-    df_fertiliser = pd.read_csv("df_fertiliser.csv", encoding='latin-1')
+    df_fertiliser = pd.read_csv("https://raw.githubusercontent.com/RitRa/Msc_CA2/master/data/df_fertiliser.csv", encoding='latin-1')
     st.write(df_fertiliser.head(5))
 
     #drop na values
