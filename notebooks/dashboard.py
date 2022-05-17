@@ -84,16 +84,20 @@ with col1:
 
 with col2:
 
-    col2.metric("Wind", "9 mph", "-8%")    
-    ################## start of histogram ##################
-    
-    fig1 = px.histogram(info['value'], title='Histogram of fertiliser types')
-    
-    # disply line Chart
-    st.plotly_chart(fig1, use_container_width=True)
-    ################## End of histogram ##################
   
-
+    ################## start of nbarplot of the number of fertiliser types ##################
+    
+    df_fertiliser_count= df_fertiliser.dropna()
+    #grouping by year and counting the fertiliser types for each year
+    df_fertiliser_count = df_fertiliser_count.groupby('year').fertiliser_type.nunique().reset_index()
+    #st.write(df_fertiliser_count.head(5))
+    
+    
+    fig_bar_count = px.bar(df_fertiliser_count, x="year", y="fertiliser_type", title='Number of fertiliser types for sale' )
+    
+    st.plotly_chart(fig_bar_count, use_container_width=True)
+    
+    ################## End of barplot of the number of fertiliser types ##################
 
     
 
@@ -110,20 +114,17 @@ with body:
     ################## End of boxplot ##################
     
     
-    ################## start of nbarplot of the number of fertiliser types ##################
+
+    col2.metric("Wind", "9 mph", "-8%")    
+    ################## start of histogram ##################
     
-    df_fertiliser_count= df_fertiliser.dropna()
-    #grouping by year and counting the fertiliser types for each year
-    df_fertiliser_count = df_fertiliser_count.groupby('year').fertiliser_type.nunique().reset_index()
-    #st.write(df_fertiliser_count.head(5))
+    fig1 = px.histogram(info['value'], title='Histogram of fertiliser types')
     
+    # disply line Chart
+    st.plotly_chart(fig1, use_container_width=True)
+    ################## End of histogram ##################
     
-    fig_bar_count = px.bar(df_fertiliser_count, x="year", y="fertiliser_type", title='Number of fertiliser types for sale' )
-    
-    st.plotly_chart(fig_bar_count, use_container_width=True)
-    
-    ################## End of barplot of the number of fertiliser types ##################
-    
+        
 
    
 with dataset:
