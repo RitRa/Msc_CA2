@@ -1,13 +1,19 @@
 import streamlit as st
-
+#streamlit run dashboard.py
 import pandas as pd
 import numpy as np
 import pickle
+#data vis
 
+import plotly.express as px
+
+
+
+#ml
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-    
+# ml    
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error,explained_variance_score
 from statsmodels.tools.eval_measures import mse, rmse
@@ -17,30 +23,91 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import classification_report, confusion_matrix
 
+#setting a wide layout
+st.set_page_config(layout="wide")
 
-
+#columns
 header = st.container()
+col1, col2 = st.columns(2)
+body = st.container()
 dataset = st.container()
 features = st.container()
 model_training = st.container()
 
+#fertiliser
+df_fertiliser = pd.read_csv("https://raw.githubusercontent.com/RitRa/Msc_CA2/master/data/df_fertiliser.csv", encoding='latin-1')
+
 
 with header:
+    select_type = st.selectbox(
+         'Select fertiliser',
+         (df_fertiliser['fertiliser_type']))
+    st.write('You selected:', select_type)    
 
-    st.title("This is a test")
-    st.text("this some textx")
-        
-    #df_fertiliser = pd.read_pickle("df_fertiliser.pkl")
-    df_fertiliser = pd.read_csv("https://raw.githubusercontent.com/RitRa/Msc_CA2/master/data/df_fertiliser.csv", encoding='latin-1')
-    st.write(df_fertiliser.head(5))
-
-    #drop na values
-    x = df_fertiliser['value'].dropna()
+with col1:
+    st.header("An owl")
+    ################## Start of line chart and select box ##################
     
-    st.subheader("Weekly Demand Data")
+    #select the type of feriliser you are interested in 
+    #https://docs.streamlit.io/library/api-reference/widgets/st.selectbox
 
-    #Bar Chart
-    st.bar_chart(x)
+    # create a dataframe based on selected
+    info = df_fertiliser[df_fertiliser['fertiliser_type'] == select_type]
+    
+   # line plot of the select datae
+    fig = px.line(info, x='date',y='value', color='fertiliser_type', title='fertiliser types ')
+    
+    # disply line Chart
+    st.plotly_chart(fig, use_container_width=True)
+
+    ################## End of line chart and select box ##################
+    
+
+
+with col2:
+    st.header("A dog")
+        
+    ################## start of histogram ##################
+    
+    fig1 = px.histogram(info['value'], title='Histogram of fertiliser types')
+    
+    # disply line Chart
+    st.plotly_chart(fig1, use_container_width=True)
+    
+    ################## End of histogram ##################
+  
+
+
+    
+
+with body:    
+
+
+    ################## start of boxplot ##################
+    
+    # plot of fertiliser type and value
+    fig_box = px.box(df_fertiliser, x="fertiliser_type", y="value", title='Boxplot of fertiliser types', color="fertiliser_type" )
+    fig_box.update_layout(height=500)
+    
+    # disply line Chart
+    st.plotly_chart(fig_box, use_container_width=True)
+    
+    ################## End of boxplot ##################
+    
+    
+    ################## start of nbarplot of the number of fertiliser types ##################
+    
+    df_fertiliser_count= df_fertiliser.dropna()
+    #grouping by year and counting the fertiliser types for each year
+    df_fertiliser_count = df_fertiliser_count.groupby('year').fertiliser_type.nunique().reset_index()
+    #st.write(df_fertiliser_count.head(5))
+    
+    
+    fig_bar_count = px.bar(df_fertiliser_count, x="year", y="fertiliser_type", title='Number of fertiliser types for sale' )
+    
+    st.plotly_chart(fig_bar_count, use_container_width=True)
+    
+    ################## End of barplot of the number of fertiliser types ##################
     
 
    
