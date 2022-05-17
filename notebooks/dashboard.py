@@ -7,7 +7,7 @@ import pickle
 
 import plotly.express as px
 
-
+from dateutil.relativedelta import relativedelta
 
 #ml
 from sklearn.ensemble import RandomForestRegressor
@@ -45,7 +45,6 @@ with header:
     st.write('You selected:', select_type)    
 
 with col1:
-    st.header("An owl")
     ################## Start of line chart and select box ##################
     
     #select the type of feriliser you are interested in 
@@ -54,8 +53,27 @@ with col1:
     # create a dataframe based on selected
     info = df_fertiliser[df_fertiliser['fertiliser_type'] == select_type]
     
+    # checking the table
+    st.write(info)
+    
+
+    
+    def get_latest_price(data):
+        #info.date
+        max_date = info['date'].max()
+        
+        return max_date
+    
+    max_date = get_latest_price(info)
+    
+    new = info[info['date']==max_date]
+    most_recent_price = new['value']
+    
+    
+    col1.metric("Fertiliser price", most_recent_price, max_date)
+    
    # line plot of the select datae
-    fig = px.line(info, x='date',y='value', color='fertiliser_type', title='fertiliser types ')
+    fig = px.line(info, x='date', y='value', color='fertiliser_type', title='fertiliser types')
     
     # disply line Chart
     st.plotly_chart(fig, use_container_width=True)
@@ -65,15 +83,14 @@ with col1:
 
 
 with col2:
-    st.header("A dog")
-        
+
+    col2.metric("Wind", "9 mph", "-8%")    
     ################## start of histogram ##################
     
     fig1 = px.histogram(info['value'], title='Histogram of fertiliser types')
     
     # disply line Chart
     st.plotly_chart(fig1, use_container_width=True)
-    
     ################## End of histogram ##################
   
 
@@ -81,8 +98,6 @@ with col2:
     
 
 with body:    
-
-
     ################## start of boxplot ##################
     
     # plot of fertiliser type and value
