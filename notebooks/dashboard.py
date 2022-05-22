@@ -102,6 +102,8 @@ if selected == 'Overview' :
         
         st.plotly_chart(fig_bar_count, use_container_width=True)
         
+
+        
         
     
     ################## End of barplot of the number of fertiliser types ##################
